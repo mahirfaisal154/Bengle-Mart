@@ -11,10 +11,7 @@ const BreadCrum = (props) => {
          <img src={arrow_icon} alt= "Arrow" />
          {product.category}
         <img src={arrow_icon} alt= "Arrow" />
-
-          
-
-  
+         {product.name}
     </div>
   )
 }
