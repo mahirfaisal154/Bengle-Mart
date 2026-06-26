@@ -29,13 +29,14 @@
     justify-content: space-between;
     background: white;
     width: 730px;
+    max-width: 90%;
     height: 70px;
     border-radius: 80px;
     border: 1px solid #e3e3e3;
 }
 
 .newsletter input{
-    width: 500px;
+    width: 100%;
     margin-left: 30px;
     border: none;
     outline: none;
@@ -46,10 +47,47 @@
 
 .newsletter div button{
     width: 210px;
+    flex-shrink: 0;
     height: 70px;
     border-radius: 80px;
     background: black;
     color: white;
     font-size: 16px;
     cursor: pointer;
+}
+
+@media (max-width: 800px){
+    .newsletter{
+        width: 90%;
+        height: auto;
+        padding: 60px 20px;
+    }
+    .newsletter h1{
+        font-size: 36px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 500px){
+    .newsletter h1{
+        font-size: 26px;
+    }
+    .newsletter p{
+        font-size: 15px;
+        text-align: center;
+    }
+    .newsletter div{
+        flex-direction: column;
+        height: auto;
+        border-radius: 20px;
+        padding: 15px;
+        gap: 15px;
+    }
+    .newsletter input{
+        margin-left: 0px;
+        text-align: center;
+    }
+    .newsletter div button{
+        width: 100%;
+    }
 }

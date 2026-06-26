@@ -25,3 +25,22 @@
  flex-wrap: wrap;
  justify-content: center;
 }
+
+@media (max-width: 800px){
+    .relatedproduct{
+        height: auto;
+        padding: 40px 20px;
+    }
+    .relatedproduct h1{
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 500px){
+    .relatedproduct h1{
+        font-size: 26px;
+    }
+    .relatedproduct-item{
+        gap: 15px;
+    }
+}

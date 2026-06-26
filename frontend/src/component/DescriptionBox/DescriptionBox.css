@@ -27,3 +27,23 @@
     padding:48px;
     padding-bottom:70px;
 }
+
+@media (max-width: 800px){
+    .descriptionbox{
+        margin: 80px 30px;
+    }
+}
+
+@media (max-width: 500px){
+    .descriptionbox{
+        margin: 60px 15px;
+    }
+    .descriptionbox-nav-box{
+        width: 50%;
+        height: 50px;
+        font-size: 14px;
+    }
+    .descriptionbox-description{
+        padding: 25px;
+    }
+}

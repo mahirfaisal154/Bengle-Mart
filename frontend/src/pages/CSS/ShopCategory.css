@@ -48,3 +48,19 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+@media (max-width: 800px){
+    .shopcategory-indexsort{
+        padding: 20px 30px;
+    }
+}
+
+@media (max-width: 500px){
+    .shopcategory-indexsort{
+        padding: 15px 15px;
+        font-size: 13px;
+    }
+    .shopcategory_products{
+        gap: 15px;
+    }
+}

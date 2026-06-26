@@ -54,3 +54,41 @@ gap:15px;
     justify-content: center;
     align-items: center;
 }
+
+@media (max-width: 800px){
+    .hero{
+        height: auto;
+        flex-direction: column;
+        padding: 40px 0px;
+    }
+    .hero-left{
+        padding-left: 30px;
+        align-items: flex-start;
+    }
+    .hero-left p{
+        font-size: 50px;
+    }
+    .hero-right img{
+        width: 80%;
+    }
+}
+
+@media (max-width: 500px){
+    .hero-left{
+        padding-left: 20px;
+    }
+    .hero-left h2{
+        font-size: 18px;
+    }
+    .hero-left p{
+        font-size: 32px;
+    }
+    .hero-hand-icon img{
+        width: 60px;
+    }
+    .hero-latest-btn{
+        width: 220px;
+        height: 55px;
+        font-size: 16px;
+    }
+}
