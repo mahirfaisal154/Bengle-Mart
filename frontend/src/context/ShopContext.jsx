@@ -5,7 +5,7 @@ export const ShopContext=createContext(null);
  const getDefaultcart=()=>{
          let cart= {};
          for(let i=0; i<all_product.length; i++){
-              cart[i]=0;
+              cart[all_product[i].id]=0;
 
          }
          return cart;
@@ -26,8 +26,9 @@ const ShopContextProvider=(props)=>{
    const getTotalCartAmount=()=>{
      let totalAmount=0;
      for(let i=0; i<all_product.length; i++){
-       if(cartItems[i] > 0){
-         totalAmount += all_product[i].new_price * cartItems[i];
+       const item = all_product[i];
+       if(cartItems[item.id] > 0){
+         totalAmount += item.new_price * cartItems[item.id];
        }
      }
      return totalAmount;
