@@ -9,6 +9,7 @@ const jwt=require("jsonwebtoken");
 const multer=require("multer");
 const path=require("path");
 const cors=require("cors");
+const bcrypt=require("bcryptjs");
 const { default: mongoose } = require("mongoose");
 app.use(cors());
 app.use(express.json());
@@ -147,7 +148,154 @@ app.get('/allproducts', async (req, res) => {
         });
     }
 });
-/////baki ache heeee
+     //USER SCHEMA 
+ 
+   const users=mongoose.model("User", {
+        name: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        password: {
+            type: String,
+            required: true
+        },
+        cartData:{
+            type:Object,
+        },
+        date:{
+            type:Date,
+            default:Date.now,
+        }
+    });
+
+
+ //creating Endpoint for registering  the user
+
+
+  app.post('/signup', async (req, res) => {
+    try {
+            const { name, email, password } = req.body;
+
+            if (!name || !email || !password) {
+                return res.status(400).json({
+                    success: 0,
+                    message: "Name, email and password are required"
+                });
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return res.status(400).json({
+                    success: 0,
+                    message: "Please enter a valid email address"
+                });
+            }
+
+            if (password.length < 8) {
+                return res.status(400).json({
+                    success: 0,
+                    message: "Password must be at least 8 characters long"
+                });
+            }
+
+            const existingUser = await users.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({
+                    success: 0,
+                    message: "An account with this email already exists"
+                });
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+
+             let cart={};
+             if (Array.isArray(req.body.cartData)) {
+                 for(let i=0;i<req.body.cartData.length;i++){
+                    cart[i]=0;
+                 }
+             }
+            const user = new users({
+                name: name,
+                email: email,
+                password: hashedPassword,
+                cartData: cart,
+            });
+            await user.save();
+  const data={
+    user:{
+        id:user.id
+    }
+  }
+    const token=jwt.sign(data,'secret_key')
+
+            res.json({
+                success:1,
+                message:"User registered successfully",
+                token: token
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success:0,
+                message:"Error registering user"
+            });
+        }
+    });
+///API for user login
+
+  app.post('/login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({
+          success: 0,
+          message: "Email and password are required"
+        });
+      }
+
+      const user = await users.findOne({ email });
+      if (!user) {
+        return res.status(400).json({
+          success: 0,
+          message: "Invalid email or password"
+        });
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({
+          success: 0,
+          message: "Invalid email or password"
+        });
+      }
+
+      const data = {
+        user: {
+          id: user.id
+        }
+      };
+      const token = jwt.sign(data, 'secret_key');
+
+      res.json({
+        success: 1,
+        message: "User logged in successfully",
+        token: token
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: 0,
+        message: "Error logging in user"
+      });
+    }
+  });   
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
