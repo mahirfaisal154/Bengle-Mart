@@ -1,7 +1,16 @@
-body{
+*{
+  box-sizing: border-box;
+}
+
+html, body{
   margin:0;
+  padding:0;
+  width:100%;
+  overflow-x:hidden;
+}
+
+body{
   font-family: "popins";
   background-color:#f6f6f6;
-  height:100vh;
-  
+  min-height:100vh;
 }
