@@ -463,7 +463,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use('/admin', express.static(path.join(__dirname, '../admin/dist')));
 
 // Admin catch-all for React Router
-app.get('/admin/*', (req, res) => {
+app.get(['/admin', '/admin/*'], (req, res) => {
     res.sendFile(path.join(__dirname, '../admin/dist/index.html'));
 });
 
