@@ -19,10 +19,6 @@ mongoose.connect(process.env.MONGO_URI || "mongodb+srv://mahir:bluestacks1234@cl
 
 //api creation
 
-app.get("/", (req, res) => {
-    res.send("Express app is running");
-});
-
   //Image Storage Engine
   const storage=multer.diskStorage({
     destination:'./uploads/images',
