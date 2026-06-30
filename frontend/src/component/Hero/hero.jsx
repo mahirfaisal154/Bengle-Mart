@@ -1,8 +1,7 @@
 import React from 'react'
 import './Hero.css'
-import hand_icon from '../Assets/hand_icon.png'
 import arrowicon from '../Assets/arrow.png'
-import hero_image from '../Assets/hero_image.png'
+import hero_image from '../Assets/target_hero.png'
 const Hero = () => {
   return (
     <div className='hero'>
@@ -11,14 +10,12 @@ const Hero = () => {
   <div>
     <div className='hero-hand-icon'>
     <p>new</p>
-      <img src={hand_icon} alt="" />
-
     </div>
     <p> collection</p>
     <p>for everyone</p>   
 
   </div>
-  <div className="hero-latest-btn">
+  <div className="hero-latest-btn" onClick={() => document.getElementById('new-collections').scrollIntoView({ behavior: 'smooth' })}>
     <div>Latest Collection</div>
     <img src={arrowicon} alt="" />
   </div>

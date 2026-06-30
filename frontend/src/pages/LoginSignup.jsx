@@ -53,7 +53,7 @@ const LoginSignup = () => {
       const data = state === "Login" ? await login() : await signup();
       console.log(`${state} response:`, data);
       if (data.success) {
-        localStorage.setItem('auth-token', data.token);
+        document.cookie = `auth-token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}`;
         navigate('/');
       } else {
         setError(data.message);

@@ -296,6 +296,117 @@ app.get('/allproducts', async (req, res) => {
       });
     }
   });   
+ //creating endpoint for newcollection data
+
+ app.get('/newcollection', async (req, res) => {
+    try {
+      const products = await Product.find({});
+      const newcollection=products.slice(1).slice(-8);
+      console.log("New collection fetched ");
+        res.send(newcollection);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: 0,
+        message: "Error fetching new collection data"
+      });
+    }
+  });
+
+
+  //creating endpoint for popular in women section
+
+   app.get('/popularinwomen', async (req, res) => {
+    try {
+      const products = await Product.find({ category: { $regex: /^women$/i } });
+      const popularInWomen = products.slice(0, 4);
+      console.log("Popular in women section fetched ");
+      res.send(popularInWomen);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: 0,
+        message: "Error fetching popular in women section data"
+      });
+    }
+  });
+    //creating middleware to fetch user
+
+    const fetchUser=async(req,res,next)=>{
+        const token=req.header('auth-token');
+        if (!token) {
+            return res.status(401).json({
+                success: 0,
+                message: "Access denied. No token provided."
+            });
+        }
+        try {
+            const decoded = jwt.verify(token, 'secret_key');
+            req.user = decoded.user;
+            next();
+        } catch (error) {
+            res.status(401).json({
+                success: 0,
+                message: "Invalid token."
+            });
+        }
+    }
+
+
+
+
+     //creating endpoint for adding products in cart data
+
+     app.post('/addtocart', fetchUser, async (req, res) => {
+       try {
+           let userData=await users.findOne({ _id: req.user.id });
+           userData.cartData[req.body.itemID] = (userData.cartData[req.body.itemID] || 0) + 1;
+           await users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+           res.json({ success: 1, message: "Product added to cart" });
+       } catch (error) {
+         console.error(error);
+         res.status(500).json({
+           success: 0,
+           message: "Error adding product to cart"
+         });
+       }
+     });
+  
+      //Creating endpoint to remove product from cart
+ app.post('/removefromcart', fetchUser, async (req, res) => {
+       try {
+          console.log("removed",req.body.itemID)
+           let userData=await users.findOne({ _id: req.user.id });
+           if (userData.cartData[req.body.itemID] > 0) {
+               userData.cartData[req.body.itemID] -= 1;
+           }
+           await users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+           res.json({ success: 1, message: "Product removed from cart" });
+       } catch (error) {
+           console.error(error);
+           res.status(500).json({
+               success: 0,
+               message: "Error removing product from cart"
+           });
+       }
+   });
+
+     //Creating endpoint to fetch the logged-in user's cart data
+
+ app.get('/getcart', fetchUser, async (req, res) => {
+       try {
+           const userData = await users.findOne({ _id: req.user.id });
+           res.json({ success: 1, cartData: userData.cartData || {} });
+       } catch (error) {
+           console.error(error);
+           res.status(500).json({
+               success: 0,
+               message: "Error fetching cart data"
+           });
+       }
+   });
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

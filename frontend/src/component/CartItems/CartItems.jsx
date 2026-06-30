@@ -3,14 +3,7 @@ import './CartItems.css'
 import { ShopContext } from '../../context/ShopContext'
 import remove_icon from  '../Assets/cart_cross_icon.png'
 const CartItems = () => {
-    const {all_product,cartItems,removeFromCart,getTotalCartAmount,} = useContext(ShopContext);
-
-    let totalAmount = 0;
-    for (const item of all_product) {
-        if (cartItems[item.id] > 0) {
-            totalAmount += item.new_price * cartItems[item.id];
-        }
-    }
+    const {allproducts,cartItems,removeFromCart,getTotalCartAmount,} = useContext(ShopContext);
 
   return (
     <div className="cartitems">
@@ -25,7 +18,7 @@ const CartItems = () => {
         
           </div>
           <hr/>
-           {all_product.map((e)=>{
+           {allproducts.map((e)=>{
             if(cartItems[e.id] > 0){
                 return    <div>
              <div className='cartitems-format cartitems-format-main'>

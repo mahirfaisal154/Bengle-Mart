@@ -4,7 +4,7 @@ import { ShopContext } from '../context/ShopContext';
 import dropdown_icon from '../component/Assets/dropdown_icon.png'
 import Item from '../component/items/Item'
 const ShopCategory = (props) => {
-    const {all_product} = React.useContext(ShopContext);
+    const {allproducts} = React.useContext(ShopContext);
 
   return (
     <div className="shop-category">
@@ -20,8 +20,8 @@ const ShopCategory = (props) => {
    </div>
       </div>
 <div className="shopcategory_products">
-  {all_product.map((item,index) => {
-    if(props.category === item.category) {
+  {allproducts.map((item,index) => {
+    if(props.category.toLowerCase() === item.category.toLowerCase()) {
       return (
         <Item
             key={index}

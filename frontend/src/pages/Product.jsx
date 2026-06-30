@@ -7,9 +7,13 @@ import DescriptionBox from '../component/DescriptionBox/DescriptionBox'
 import RelatedProduct from '../component/RelatedProduct/RelatedProduct'
 
 const Product = () => {
-   const {all_product}=useContext(ShopContext)
+   const {allproducts}=useContext(ShopContext)
    const {productId} = useParams();
-   const product=all_product.find((e)=>e.id===Number(productId));
+   const product=allproducts.find((e)=>e.id===Number(productId));
+
+   if (!product) {
+     return <div>Loading...</div>;
+   }
 
   return (
     <div>

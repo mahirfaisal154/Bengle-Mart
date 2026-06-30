@@ -1,15 +1,30 @@
-import React from 'react'
+import {React,useEffect,useState} from 'react'
 import './popular.css'
-import data_product from '../Assets/data.js'
 import Item from '../items/Item'
 
 const Popular = () => {
+  const [popularProducts, setPopularProducts] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:4000/popularinwomen')
+      .then(response => response.json())
+      .then(data => setPopularProducts(data));
+  }, []);
+
+
+
+  //creating endpointts for popular in cartdata
+
+
+
+
+
+
   return (
     <div className="popular">
       <h1>Popular In Women</h1>
       <hr/>
       <div className="popular-item">
-        {data_product.map((item,i) => (
+        {popularProducts.map((item,i) => (
           <Item
             key={i}
             id={item.id}

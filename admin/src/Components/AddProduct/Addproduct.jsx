@@ -1,60 +1,86 @@
 import React, { useState } from 'react'
 import  './Addproduct.css'
 import upload_area from '../../assets/upload_area.svg'
+
+const initialDetails = {
+  name: '',
+  image: '',
+  category: "Women",
+  new_price: '',
+  old_price: '',
+};
+
 const Addproduct = () => {
 
   const [image, setImage] = useState(null);
-  const [productDetails,setProductDetails] = useState({
-    name: '',
-    image: '',
-     category: "Women",
-    new_price: '',
-    old_price: '',
-   
-  });
+  const [productDetails, setProductDetails] = useState(initialDetails);
+  const [statusMsg, setStatusMsg] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const imageHandler = (e) => {
     setImage(e.target.files[0])
   }
- const changeHandler = (e) => {
+
+  const changeHandler = (e) => {
     setProductDetails({
       ...productDetails,
       [e.target.name]: e.target.value
     })
- }
-
- const Add_product= async () => {
-  // Implementation for adding product
-  console.log(productDetails)
-  let responseData;
-  let product=productDetails;
-  let formData=new FormData();
-  formData.append('product',image);
-  await fetch('http://localhost:4000/upload', {
-    method: 'POST',
-    headers:{
-        Accept:'application/json',
-    },
-    body:formData,
-
-  }).then((response) => response.json()).then((data) => {
-    responseData = data;
-  });
-  if(responseData.success) {
-    product.image=responseData.image_url;
-    console.log(product);
-    await fetch('http://localhost:4000/addproduct', {
-      method: 'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(product)
-    }).then((response) => response.json()).then((data) => {
-      console.log(data);
-    });
   }
-}
+
+  const resetForm = () => {
+    setProductDetails(initialDetails);
+    setImage(null);
+    // clear the file input visually
+    const fileInput = document.getElementById('file-input');
+    if (fileInput) fileInput.value = '';
+  };
+
+  const Add_product = async () => {
+    setStatusMsg('');
+    if (!image) {
+      setIsError(true);
+      setStatusMsg('Please select a product image.');
+      return;
+    }
+
+    let responseData;
+    let product = { ...productDetails };
+    let formData = new FormData();
+    formData.append('product', image);
+
+    await fetch('http://localhost:4000/upload', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: formData,
+    }).then((response) => response.json()).then((data) => {
+      responseData = data;
+    });
+
+    if (responseData.success) {
+      product.image = responseData.image_url;
+      await fetch('http://localhost:4000/addproduct', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+      }).then((response) => response.json()).then((data) => {
+        if (data.success) {
+          setIsError(false);
+          setStatusMsg('Product added successfully!');
+          resetForm();
+        } else {
+          setIsError(true);
+          setStatusMsg('Failed to add product. Please try again.');
+        }
+      });
+    } else {
+      setIsError(true);
+      setStatusMsg('Image upload failed. Please try again.');
+    }
+  }
 
   return (
     <div className="add-product">
@@ -87,7 +113,12 @@ const Addproduct = () => {
           </label>
           <input onChange={imageHandler} type="file" name="image" id="file-input" hidden />
       </div>
-      <button onClick={()=>{Add_product()}} className="addproduct-btn">Add Product</button>
+      <button onClick={Add_product} className="addproduct-btn">Add Product</button>
+      {statusMsg && (
+        <p style={{ marginTop: '12px', fontWeight: '600', color: isError ? '#e74c3c' : '#27ae60' }}>
+          {statusMsg}
+        </p>
+      )}
     </div>
   )
 }
