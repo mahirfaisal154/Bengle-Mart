@@ -54,7 +54,7 @@ const LoginSignup = () => {
       console.log(`${state} response:`, data);
       if (data.success) {
         document.cookie = `auth-token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}`;
-        navigate('/');
+        window.location.replace('/');
       } else {
         setError(data.message);
       }

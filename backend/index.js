@@ -359,35 +359,32 @@ app.get('/allproducts', async (req, res) => {
 
      app.post('/addtocart', fetchUser, async (req, res) => {
        try {
-           let userData=await users.findOne({ _id: req.user.id });
+           let userData = await users.findOne({ _id: req.user.id });
+           if (!userData.cartData) userData.cartData = {};
            userData.cartData[req.body.itemID] = (userData.cartData[req.body.itemID] || 0) + 1;
-           await users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+           userData.markModified('cartData');
+           await userData.save();
            res.json({ success: 1, message: "Product added to cart" });
        } catch (error) {
          console.error(error);
-         res.status(500).json({
-           success: 0,
-           message: "Error adding product to cart"
-         });
+         res.status(500).json({ success: 0, message: "Error adding product to cart" });
        }
      });
-  
+
       //Creating endpoint to remove product from cart
  app.post('/removefromcart', fetchUser, async (req, res) => {
        try {
-          console.log("removed",req.body.itemID)
-           let userData=await users.findOne({ _id: req.user.id });
+           let userData = await users.findOne({ _id: req.user.id });
+           if (!userData.cartData) userData.cartData = {};
            if (userData.cartData[req.body.itemID] > 0) {
                userData.cartData[req.body.itemID] -= 1;
            }
-           await users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+           userData.markModified('cartData');
+           await userData.save();
            res.json({ success: 1, message: "Product removed from cart" });
        } catch (error) {
            console.error(error);
-           res.status(500).json({
-               success: 0,
-               message: "Error removing product from cart"
-           });
+           res.status(500).json({ success: 0, message: "Error removing product from cart" });
        }
    });
 
@@ -396,17 +393,68 @@ app.get('/allproducts', async (req, res) => {
  app.get('/getcart', fetchUser, async (req, res) => {
        try {
            const userData = await users.findOne({ _id: req.user.id });
-           res.json({ success: 1, cartData: userData.cartData || {} });
+           const cartData = userData.toObject().cartData || {};
+           res.json({ success: 1, cartData });
        } catch (error) {
            console.error(error);
-           res.status(500).json({
-               success: 0,
-               message: "Error fetching cart data"
-           });
+           res.status(500).json({ success: 0, message: "Error fetching cart data" });
        }
    });
 
 
+
+// Admin endpoint: all users' orders (cart data joined with products)
+app.get('/allorders', async (req, res) => {
+    try {
+        const allUsers = await users.find({});
+        const allProducts = await Product.find({});
+
+        const productMap = {};
+        allProducts.forEach(p => {
+            const rawId = p.toObject().id;
+            productMap[String(rawId)] = p;
+        });
+
+        const orders = [];
+        allUsers.forEach(user => {
+            const cartData = user.toObject().cartData || {};
+            const items = [];
+            let totalCost = 0;
+
+            Object.entries(cartData).forEach(([itemId, qty]) => {
+                if (qty > 0) {
+                    const product = productMap[String(itemId)];
+                    if (product) {
+                        items.push({
+                            product: {
+                                id: product.toObject().id,
+                                name: product.name,
+                                image: product.image,
+                                new_price: product.new_price,
+                                category: product.category,
+                            },
+                            quantity: qty,
+                        });
+                        totalCost += product.new_price * qty;
+                    }
+                }
+            });
+
+            if (items.length > 0) {
+                orders.push({
+                    user: { name: user.name, email: user.email },
+                    items,
+                    totalCost,
+                });
+            }
+        });
+
+        res.json({ success: 1, orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: 0, message: "Error fetching orders" });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
