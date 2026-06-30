@@ -456,6 +456,22 @@ app.get('/allorders', async (req, res) => {
     }
 });
 
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Serve admin at /admin
+app.use('/admin', express.static(path.join(__dirname, '../admin/dist')));
+
+// Admin catch-all for React Router
+app.get('/admin/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../admin/dist/index.html'));
+});
+
+// Frontend catch-all for React Router (must be last)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
