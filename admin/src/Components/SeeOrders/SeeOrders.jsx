@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import './SeeOrders.css'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+
 const SeeOrders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:4000/allorders')
+        fetch(`${BACKEND_URL}/allorders`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) setOrders(data.orders);

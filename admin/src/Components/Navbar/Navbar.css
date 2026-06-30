@@ -15,6 +15,14 @@
     max-width: 40vw;
     height: auto;
 }
+
+.nav-logo-text{
+    font-size: 28px;
+    font-weight: 700;
+    color: #171717;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
 .nav-profile{
     width:75px;
     max-width: 15vw;

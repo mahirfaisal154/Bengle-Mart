@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './CSS/LoginSignup.css'
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '${BACKEND_URL}';
+
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -15,7 +17,7 @@ const LoginSignup = () => {
   };
 
   const login = async () => {
-    const response = await fetch('http://localhost:4000/login', {
+    const response = await fetch(`${BACKEND_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: formData.email, password: formData.password })
@@ -24,7 +26,7 @@ const LoginSignup = () => {
   };
 
   const signup = async () => {
-    const response = await fetch('http://localhost:4000/signup', {
+    const response = await fetch(`${BACKEND_URL}/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

@@ -1,4 +1,4 @@
-const port=4000
+const port = process.env.PORT || 4000
 const dns=require("dns");
 dns.setServers(["192.168.1.1", "8.8.8.8"]);
 const express=require("express");
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 //databnase connection with mongodb 
-mongoose.connect("mongodb+srv://mahir:bluestacks1234@cluster0.fupp8jt.mongodb.net/");
+mongoose.connect(process.env.MONGO_URI || "mongodb+srv://mahir:bluestacks1234@cluster0.fupp8jt.mongodb.net/");
 
 //api creation
 
@@ -39,7 +39,7 @@ app.use ('/images', express.static('uploads/images'));
 app.post("/upload",upload.single("product"), (req, res) => {
     res.json({
         success:1,
-        image_url:`http://localhost:${port}/images/${req.file.filename}`
+        image_url:`${process.env.BACKEND_URL || `http://localhost:${port}`}/images/${req.file.filename}`
     })
 })
 
@@ -232,7 +232,7 @@ app.get('/allproducts', async (req, res) => {
         id:user.id
     }
   }
-    const token=jwt.sign(data,'secret_key')
+    const token=jwt.sign(data, process.env.JWT_SECRET || 'secret_key')
 
             res.json({
                 success:1,
@@ -281,7 +281,7 @@ app.get('/allproducts', async (req, res) => {
           id: user.id
         }
       };
-      const token = jwt.sign(data, 'secret_key');
+      const token = jwt.sign(data, process.env.JWT_SECRET || 'secret_key');
 
       res.json({
         success: 1,
@@ -341,7 +341,7 @@ app.get('/allproducts', async (req, res) => {
             });
         }
         try {
-            const decoded = jwt.verify(token, 'secret_key');
+            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
             req.user = decoded.user;
             next();
         } catch (error) {
