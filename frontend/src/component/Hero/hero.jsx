@@ -1,5 +1,5 @@
 import React from 'react'
-import './Hero.css'
+import './hero.css'
 import arrowicon from '../Assets/arrow.png'
 import hero_image from '../Assets/target_hero.png'
 const Hero = () => {
