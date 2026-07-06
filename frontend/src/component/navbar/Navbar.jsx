@@ -28,7 +28,11 @@ const Navbar = () => {
     <div className="navbar" >
         <Link to="/" className="nav-logo" onClick={()=>setMenu("Shop")}>
             <img src={logo} alt="Logo" />
+<<<<<<< HEAD
             <p>Bengle Mart</p>
+=======
+            <p>Bengal Mart</p>
+>>>>>>> 134b5a1 (Typing error in Navbar title and photo was overlapped with navbar.Both fixed.)
         </Link>
         <ul className="nav-menu">
             <li onClick={()=>setMenu("Shop")}><Link to="/">Shop</Link>{menu==="Shop"? <hr/> : <></>}</li>
