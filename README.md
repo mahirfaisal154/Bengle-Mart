@@ -1,4 +1,3 @@
-<img width="2558" height="1312" alt="image" src="https://github.com/user-attachments/assets/27f6a5e4-6ab9-4247-bea1-34b60a407bca" /># 🛍️ Bengle Mart — Full-Stack MERN E-Commerce Application
 
 A feature-rich, production-ready e-commerce platform built with the **MERN stack** (MongoDB, Express, React, Node.js). It supports secure user authentication, real-time cart management, product browsing by category, an integrated admin panel for inventory and order management, and is fully deployed as a single service on Render.
 
