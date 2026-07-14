@@ -1,4 +1,4 @@
-# 🛍️ Bengle Mart — Full-Stack MERN E-Commerce Application
+<img width="2558" height="1312" alt="image" src="https://github.com/user-attachments/assets/27f6a5e4-6ab9-4247-bea1-34b60a407bca" /># 🛍️ Bengle Mart — Full-Stack MERN E-Commerce Application
 
 A feature-rich, production-ready e-commerce platform built with the **MERN stack** (MongoDB, Express, React, Node.js). It supports secure user authentication, real-time cart management, product browsing by category, an integrated admin panel for inventory and order management, and is fully deployed as a single service on Render.
 
@@ -188,6 +188,18 @@ VITE_BACKEND_URL       = https://bengle-mart.onrender.com
 ## 📸 Preview
 
 > Visit [https://bengle-mart.onrender.com](https://bengle-mart.onrender.com) to see the live application.
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210523.png?raw=true)
+ ![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210538.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210625.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210644.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210658.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210711.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210720.png?raw=true)
+ ![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210757.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20210812.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20211728.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20211748.png?raw=true)
+![image alt](https://github.com/mahirfaisal154/Bengle-Mart/blob/main/Images/Screenshot%202026-07-14%20211758.png?raw=true)
 
 ---
 
