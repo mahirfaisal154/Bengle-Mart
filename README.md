@@ -88,20 +88,8 @@ bengle-mart/
     └── uploads/images/         # Uploaded product images
 ```
 
----
 
-## 🚀 Getting Started
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- A MongoDB Atlas account
-- Git
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/mahirfaisal154/Bengle-Mart.git
-cd Bengle-Mart
-```
 
 ### 2. Configure environment variables
 Create a `.env` file inside the `backend` directory:

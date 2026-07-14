@@ -3,6 +3,10 @@
     justify-content: space-around;
     padding:16px;
     box-shadow: 0 1px 3px -2px black;
+    /* keeps the navbar painted above page content so it stays clickable */
+    position: relative;
+    z-index: 100;
+    background: white;
 }
 .nav-logo{
     display: flex;
